@@ -1,0 +1,11 @@
+Design:
+
+
+DataArray
+array of data items
+	list or array?
+	fast lookup
+	easy changes - list - shouldn't change much
+	go with an array
+
+	
