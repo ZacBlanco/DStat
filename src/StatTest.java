@@ -1,4 +1,3 @@
-import java.awt.List;
 import java.util.Random;
 
 import descriptive.*;
@@ -10,7 +9,7 @@ public class StatTest {
 		Random r = new Random();
 		int max = 99;
 		int min = 0;
-		int trialLength = 8000;		
+		int trialLength = 4000;		
 
 			double[] nums = new double[trialLength];
 			for (int i = 0; i < nums.length; i++) {
@@ -20,20 +19,23 @@ public class StatTest {
 			
 		long start = System.nanoTime();
 	
-		print("Min:" + min + " Max: " + max);
-		print("Mean: " + LocationTools.mean(nums));
-		print("Mode: " + LocationTools.mode(nums));
-		print("Standard Deviation: " + DispersionTools.stdev(nums));
-		print("Median: " + LocationTools.median(nums));
+		
+		Distribution d = new Distribution(nums);
+		
+		print("Min:" + d.getMin() + " Max: " + d.getMax());
+		print("Mean: " + d.getMean());
+		print("Mode: " + d.getMode());
+		print("Standard Deviation: " + d.getStDev());
+		print("Median: " + d.getMedian());
+		print("IQR: " + d.getIQR());
+		print("1st Quartile: " + d.getQ1() + " 3rd Quartile: " + d.getQ3());
+		
 		
 		long end = System.nanoTime();
 		
-		print("Time: " + ((double)(end - start) / 1000000000.0));
+		print("Running Time: " + ((double)(end - start) / 1000000000.0));
 		
 		//print("Median: " + LocationTools.median(l));
-		
-		
-		
 		
 	}
 	

@@ -34,10 +34,40 @@ public class DispersionTools {
 		double[] qs = new double[3];
 		Arrays.sort(l);
 		qs[1] = LocationTools.median(l);
+		return qs;
 		
 	}
 	
+	// Returns the first index of a specified value
 	private static int indexOf(double[] l, double val){
+		return indexOf(l, val, 0);
+	}
+	
+	//returns the first index of the occurence of a value starting at/after the specified starting value.
+	private static int indexOf(double[] l, double val, int start){
+		
+		for(int i = start; i < l.length; i++){
+			if(val == l[i]){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	
+	public static double percentile(double[] l, int p){
+		
+		if(p > 0 && p < 100){
+			int i = (int)Math.ceil((((double)p)/100)*(l.length - 1));
+			if (i < l.length){
+				return l[i];
+			} else {
+				return Double.NaN;
+			}
+		}else{
+			return Double.NaN;
+		}
+		
 		
 	}
 	
@@ -57,7 +87,7 @@ public class DispersionTools {
 		return (diffSum / list.length);
 	}
 
-	public  double[] zscores(double[] list, double dev, double mean) {
+	public static  double[] zscores(double[] list, double dev, double mean) {
 		double[] scores = new double[list.length];
 		if (dev > 0) {
 			for (int i = 0; i < list.length; i++) {
@@ -69,11 +99,11 @@ public class DispersionTools {
 		}
 	}
 
-	public  double[] zscores(double[] list) {
+	public static double[] zscores(double[] list) {
 		return zscores(list, stdev(list), LocationTools.mean(list));
 	}
 	
-	public  double zscore(double n, double std, double mean){
+	public static double zscore(double n, double std, double mean){
 		if(std > 0){
 			return (n-mean)/std;
 		}else{
@@ -81,7 +111,7 @@ public class DispersionTools {
 		}
 	}
 	
-	public  double zscore(double n, double[] list){
+	public double zscore(double n, double[] list){
 		return zscore(n, stdev(list), LocationTools.mean(list));
 	}
 	

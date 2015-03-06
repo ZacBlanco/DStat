@@ -1,8 +1,6 @@
 package descriptive;
 
-import java.lang.reflect.Array;
 import java.util.*;
-
 /*
  * This class contains methods for the following statistical functions:
  * 
@@ -25,6 +23,7 @@ public class LocationTools {
 		if (list.length > 0) {
 			long sum = 0;
 			for (double x : list) {
+				
 				sum += x;
 			}
 			return (sum / list.length);
@@ -35,25 +34,11 @@ public class LocationTools {
 	}
 
 	// Find the median of a set of numbers
-	// Must implement a sorting algorithm
 	public static double median(double[] list) {
-
-		if (!isSorted(list)) {
-			Arrays.sort(list);
-		}
-		if (list.length % 2 == 0) {
-			int m1 = (list.length - 1) / 2;
-			int m2 = (list.length + 1) / 2;
-
-			return (list[m1] + list[m2]) / 2;
-
-		} else {
-			int mid = list.length / 2;
-			return list[mid];
-		}
-
+		return median(list, 0, list.length);
 	}
 
+	//Get the median between two specified indeces of an array
 	public static double median(double[] list, int n1, int n2) {
 
 		if (!isSorted(list)) {
@@ -61,18 +46,20 @@ public class LocationTools {
 		}
 			int size = n2 - n1;
 			if (size % 2 == 0) {
-				int m1 = (size - 1) / 2;
-				int m2 = (size + 1) / 2;
+				int m1 = ((size - 1)/2) + n1;
+				int m2 = ((size + 1)/2) + n1;
 
 				return (list[m1] + list[m2]) / 2;
 
 			} else {
-				int mid = (n2 - n1) / 2;
+				int mid = ((n2 - n1)/2) + n1;
 				return list[mid];
 			}
 		
 	}
 
+	
+	//Check to see if an array is sorted. O(n) run time worst case.
 	private static boolean isSorted(double[] a) {
 		for (int i = 1; i < a.length - 1; i++) {
 			if (a[i - 1] > a[i] || a[i + 1] < a[i]) {
@@ -82,75 +69,74 @@ public class LocationTools {
 		return true;
 	}
 
+	//TODO Fix sort implementation
 	// a quicksort (sort of) implementation for outside use and for median
 	// function
-	private static double[] zsort(double[] l, int lo, int hi) {
+//	private static double[] zsort(double[] l, int lo, int hi) {
+//
+//		// A new try at a quicksort implementation
+//		double[] temp = l;
+//		if (hi - lo > 1 && hi > lo) {
+//
+//			// pick a pivot between hi and lo
+//			int piv = new Random().nextInt(hi - lo) + lo;
+//			double pVal = temp[piv];
+//			print("Hi: " + hi + " lo: " + lo + " Pivot: " + piv);
+//			// hide pivot
+//			// print(temp);
+//			temp = swap(temp, piv, lo);
+//			// print(temp);
+//
+//			int store = lo + 1;
+//			for (int j = store; j <= hi; j++) {
+//
+//				if (temp[j] < pVal) {
+//					// print("Flipping " + j + " and " + store);
+//					// print(temp);
+//					temp = swap(temp, j, store);
+//					store++;
+//					// print(temp);
+//				}
+//			}
+//			// print("Swapped All in pass");
+//			// print(temp);
+//			temp = swap(temp, lo, store - 1);
+//			print(temp);
+//			temp = zsort(temp, lo, store - 2);
+//			temp = zsort(temp, store, hi);
+//
+//		}
+//
+//		return temp;
+//
+//	}
 
-		// A new try at a quicksort implementation
-		double[] temp = l;
-		if (hi - lo > 1 && hi > lo) {
+//Print to the log the array l
+//	private void print(double[] l) {
+//
+//		String s = "[";
+//		for (int i = 0; i < l.length - 1; i++) {
+//			s += l[i] + ", ";
+//		}
+//		s += l[l.length - 1] + "]";
+//
+//		System.out.println(s);
+//
+//	}
+//	public static double[] zsort(double[] l) {
+//		return zsort(l, 0, l.length - 1);
+//	}
 
-			// pick a pivot between hi and lo
-			int piv = new Random().nextInt(hi - lo) + lo;
-			double pVal = temp[piv];
-			print("Hi: " + hi + " lo: " + lo + " Pivot: " + piv);
-			// hide pivot
-			// print(temp);
-			temp = swap(temp, piv, lo);
-			// print(temp);
+	//swap values in an array
+//	private double[] swap(double[] l, int i1, int i2) {
+//		double temp = l[i1];
+//		l[i1] = l[i2];
+//		l[i2] = temp;
+//		return l;
+//	}
 
-			int store = lo + 1;
-			for (int j = store; j <= hi; j++) {
-
-				if (temp[j] < pVal) {
-					// print("Flipping " + j + " and " + store);
-					// print(temp);
-					temp = swap(temp, j, store);
-					store++;
-					// print(temp);
-				}
-			}
-			// print("Swapped All in pass");
-			// print(temp);
-			temp = swap(temp, lo, store - 1);
-			print(temp);
-			temp = zsort(temp, lo, store - 2);
-			temp = zsort(temp, store, hi);
-
-		}
-
-		return temp;
-
-	}
-
-	private static void print(double[] l) {
-
-		String s = "[";
-		for (int i = 0; i < l.length - 1; i++) {
-			s += l[i] + ", ";
-		}
-		s += l[l.length - 1] + "]";
-
-		System.out.println(s);
-
-	}
-
-	private static void print(String s) {
-		System.out.println(s);
-	}
-
-	public static double[] zsort(double[] l) {
-		return zsort(l, 0, l.length - 1);
-	}
-
-	private static double[] swap(double[] l, int i1, int i2) {
-		double temp = l[i1];
-		l[i1] = l[i2];
-		l[i2] = temp;
-		return l;
-	}
-
-	public static int ctv(double value, double[] list) {
+	//Find the index in a list that is closest to the specified value.
+	public static int closestTo(double value, double[] list) {
 
 		int cInd = list.length + 1;
 		double cDist = Double.MAX_VALUE;
@@ -168,6 +154,7 @@ public class LocationTools {
 
 	}
 
+	//Return a list of modes in  a Map
 	public static Map<Double, Integer> mode(double[] list) {
 
 		if (list.length > 0) {
